@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>سیستم مدیریت مشتری اپفورال</title>
+		<meta name="description" content="اپفورال" />
+		<meta name="keywords" content="اپفورال" />
+		<meta name="author" content="vah7id" />
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="/css/component.css" />
+		<link rel="stylesheet" href="/css/devices.min.css" type="text/css">
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script src="/js/jquery-2.1.3.min.js"></script>
+		<script src="/js/html.sortable.min.js"></script>
+		<script src="/js/modernizr.custom.js"></script>
+
+	</head>
+	<body>
+
+		<div class="loading-cnt hide">
+			<div class="loader" title="2">
+			  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			     width="70px" height="70px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+			  <path fill="#3498DB" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+			    <animateTransform attributeType="xml"
+			      attributeName="transform"
+			      type="rotate"
+			      from="0 25 25"
+			      to="360 25 25"
+			      dur="0.6s"
+			      repeatCount="indefinite"/>
+			    </path>
+			  </svg>
+			</div>
+		</div>
+
+
+		<div class="notification hide success">
+			<p></p>
+			<img src="/img/cross-white.png" />
+		</div>
+
+		<div class="notification hide error">
+			<p></p>
+			<img src="/img/cross-white.png" />
+		</div>
+
+
+		<div class="md-modal md-effect-12" id="modal-12">
+			<div class="md-content">
+				<h3>اختصاص به گروه</h3>
+				<div>
+					<p style="text-align:center">از لیست گروه های زیر میتوانید این کاربر را به یکی از آن ها اختصاص دهید. برای اینکار روی ردیف گروهی بروید و روی دکمه اختصاص آن کلیک کنید.</p>
+					<table border="0">
+						<thead>
+							<tr>
+								<td>نام گروه</td>
+								<td>شماره</td>
+								<td>تعداد استفاده شده</td>
+								<td>دستورات</td>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- append content with ajax -->
+						</tbody>
+					</table>
+					<button class="md-close"><img src="/img/cross.png" /></button>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="md-modal md-effect-12" id="modal-createGroup">
+			<div class="md-content">
+				<h3>ایجاد گروه جدید</h3>
+				<div id="form-createGroup">
+					<input type="text" name="devid" id="user_add_group_devid" placeholder="نام کامل گروه" required />
+					<input type="text" name="username" id="user_add_group_username" placeholder="نام کاربری" required />
+					<input type="password" name="password" id="user_add_group_password"  placeholder="کلمه عبور" required />
+					<input type="text" name="device_count" id="user_add_group_devcount" placeholder="تعداد دستگاه" required />
+					<input type="text" name="max_devices" id="user_add_group_max_dev" placeholder="ماکزیمم تعداد دستگاه" required />
+					<input type="text" name="profile_name" id="user_add_group_profile" placeholder="نام پروفایل" required />
+					<input type="text" name="order" id="user_add_group_order" placeholder="ترتیب" required />
+					<label class="checkbox" for="checkbox1">
+			            <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox">
+			            <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+			            اینترپرایز
+		            </label>
+					<button class="submit-PROJECT">ثبت گروه جدید</button>
+				</div>
+				<button class="md-close"><img src="/img/cross.png" /></button>
+			</div>
+		</div>
+
+		<div class="md-modal md-effect-12" id="modal-secondEmail">
+		    <div class="md-content">
+		        <h3>ارسال ایمیل دوم (ایمیل نصب اپفورال)</h3>
+		        <div id="form-secondEmail">
+		            <input type="text" name="udid" id="user_second_mail_udid" placeholder="آی دی دستگاه" required />
+		            <button class="submit-PROJECT-secondMail">ارسال ایمیل دوم</button>
+		        </div>
+		        <button class="md-close"><img src="/img/cross.png" /></button>
+		    </div>
+		</div>
+
+		<div class="md-modal md-effect-12" id="modal-firstEmail">
+		    <div class="md-content">
+		        <h3>ارسال ایمیل اول</h3>
+		        <form id="form-firstEmail">
+		            <input type="email" name="udid" id="user_first_mail_email" placeholder="آدرس ایمیل" required />
+		            <button class="submit-PROJECT-firstMail">ارسال ایمیل اول</button>
+		        </form>
+		        <button class="md-close"><img src="/img/cross.png" /></button>
+		    </div>
+		</div>
+
+		<div class="md-modal md-effect-12" id="modal-userData">
+			<div class="md-content">
+				<h3>مشخصات کاربر</h3>
+				<table id="user-data">
+					<col width="25%">
+					<col width="35%">
+					<col width="15%">
+					<col width="25%">
+				</table>
+				<button class="md-close"><img src="/img/cross.png" /></button>
+			</div>
+		</div>
+
+		<div class="md-modal md-effect-12" id="modal-appNote">
+			<div class="md-content"></div>
+			<button class="md-close"><img src="/img/cross.png" /></button>
+		</div>
+
+		<div class="md-modal md-effect-12" id="modal-appDesc">
+			<div class="md-content">
+			</div>
+			<button class="md-close"><img src="/img/cross.png" /></button>
+		</div>
+
+		<div class="md-modal md-effect-12" id="modal-appDownload">
+			<div class="md-content">
+				<h3>اضافه کردن اپلیکیشن</h3>
+				<div id="downloader-box">
+					<p>برای دانلود، لینک اپ‌های مورد نظر را در فرم زیر وارد کنید و از «,» (کامای انگلیسی) برای جدا کردن لینک‌ها استفاده کنید.</p>
+					<form id="form-createGroup">
+						<textarea class="appurl" required></textarea>
+						<div class="two-button-box">
+							<button class="submit-appDownload">دانلود</button>
+							<button class="clear-textarea" onclick="$('.appurl').val('')">از نو</button>
+						</div>
+					</form>
+					<button class="md-close"><img src="/img/cross.png" /></button>
+				</div>
+				<div id="downloader-status">
+					<p>برای مشاهده آخرین زمان فعالیت دانلودر روی دکمه به روزرسانی کلیک کنید.</p>
+					<!-- downloader action result -->
+					<p id="dl-act-res"></p>
+					<div class="two-button-box">
+						<button onclick="update_axel_change()" class="update">به روز‌رسانی</button>
+						<button onclick="restart_downloader()" id="reset-downloader">راه اندازی مجدد</button>
+					</div>
+				</div>
+				<div id="add-download-result">
+					<div style="display: none;" id="valid-download">
+						<h4>لینک‌های زیر با موفقیت به لیست دانلود افزوده شده‌اند:</h4>
+						<ul>
+						</ul>
+					</div>
+					<div style="display: none;" id="invalid-download">
+						<h4>متاسفانه سیستم قادر به دانلود از لینک‌های زیر نمی‌باشد:</h4>
+						<ul>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="md-modal md-effect-12" id="modal-bannerUploader">
+			<div class="md-content">
+				<h3>بارگزاری بنر</h3>
+				<div id="banner-uploader" class="tool-box">
+					<h4>ایجاد بنر</h4>
+					<form id="banner" method='post' enctype='multipart/form-data'>
+						<ul>
+							<li>
+								<label for="alt">نوشته جایگزین</label>
+								<input type="text" name="alt" required>
+							</li><li>
+								<label for="app">شناسه اپ</label>
+								<input type="text" name="app">
+							</li><li>
+								<label for="iphone-375w@2x">بنر آیفون <span>«۳۳۷×۷۵۰»</span></label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="iphone-img2" type='file' name='iphone1' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-iphone2" class="fakeinput" />
+									</div>
+								</div>
+							</li><li>
+								<label for="iphone-640w@2x">بنر آیفون <span>«۲۸۸×۶۴۰»</span></label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="iphone-img1" type='file' name='iphone2' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-iphone1" class="fakeinput" />
+									</div>
+								</div>
+							</li><li>
+								<label for="iphone-414w@2x">بنر آیفون <span>«۵۵۹×۱۲۴۲»</span></label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="iphone-img3" type='file' name='iphone3' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-iphone3" class="fakeinput" />
+									</div>
+								</div>
+							</li><li>
+								<label for="ipad@2x">بنر آیپ <span>«۴۵۰×۱۰۰۰»</span></label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="ipad-img" type='file' name='ipad@2x' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-ipad" class="fakeinput" />
+									</div>
+								</div>
+							</li>
+						</ul>
+						<div class="one-button-box">
+							<button>ایجاد بنر</button>
+						</div>
+						<div class="clear"></div>
+					</form> <!-- /#banner -->
+					<button class="md-close"><img src="/img/cross.png" /></button>
+				</div> <!-- /banner-uploader -->
+
+			</div> <!-- /.md-content -->
+		</div> <!-- /#modal-bannerUploader -->
+
+		<div class="md-modal md-effect-12" id="modal-bundleUploader">
+			<div class="md-content">
+				<h3>بارگزاری باندل</h3>
+				<div id="bundle-uploader" class="tool-box">
+					<h4>ایجاد باندل</h4>
+					<form id="bundle" method='post' enctype='multipart/form-data'>
+						<ul>
+							<li>
+								<label for="slug">برچسب</label>
+								<input type="text" name="slug" required>
+							</li><li>
+								<label for="title">عنوان</label>
+								<input type="text" name="title">
+							</li><li>
+								<label for="img1">بنر آیفون</label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="img1" type='file' name='img1' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-img1" class="fakeinput" />
+									</div>
+								</div>
+							</li><li>
+								<label for="img2">بنر آیفون</label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="img2" type='file' name='img2' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-img2" class="fakeinput" />
+									</div>
+								</div>
+							</li><li>
+								<label for="img3">بنر آیفون</label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="img3" type='file' name='img3' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-img3" class="fakeinput" />
+									</div>
+								</div>
+							</li><li>
+								<label for="img4">بنر سایت</label>
+								<div class="fileinput">
+									<input onchange="setuploadbox(this)" accept="image/*" id="img4" type='file' name='img4' required/>
+									<div class="fakefile">
+										<span class="icon-photo"></span>
+										<input id="fake-img4" class="fakeinput" />
+									</div>
+								</div>
+							</li><li>
+                  <lable for="apps">شناسهٔ اپ‌ها <span>با کاما جدا شود</span> </lable>
+									<textarea name="apps" style="width: 298px; height: 163px; direction: ltr" required/></textarea>
+              </li>
+						</ul>
+						<div class="one-button-box">
+							<button>ایجاد بنر</button>
+						</div>
+						<div class="clear"></div>
+					</form> <!-- /#bundle -->
+					<button class="md-close"><img src="/img/cross.png" /></button>
+				</div> <!-- /bundle-uploader -->
+
+			</div> <!-- /.md-content -->
+		</div> <!-- /#modal-bundleUploader -->
+
+		<div class="md-modal md-effect-12" id="modal-editGroup">
+			<div class="md-content">
+				<h3>ویرایش گروه</h3>
+				<form id="form-editGroup">
+					<input type="text" name="devid" id="user_edit_group_devid" placeholder="نام کامل گروه" required />
+					<input type="text" name="username" id="user_edit_group_username" placeholder="نام کاربری" required />
+					<input type="password" name="password" id="user_edit_group_password"  placeholder="کلمه عبور" required />
+					<input type="text" name="device_count" id="user_edit_group_devcount" placeholder="تعداد دستگاه" required />
+					<input type="text" name="max_devices" id="user_edit_group_max_dev" placeholder="ماکزیمم تعداد دستگاه" required />
+					<input type="text" name="profile_name" id="user_edit_group_profile" placeholder="نام پروفایل" required />
+					<input type="text" name="order" id="user_edit_group_order" placeholder="ترتیب" required />
+					<label class="checkbox" for="checkbox">
+			            <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox" class="custom-checkbox">
+			            <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+			            اینترپرایز
+		            </label>
+					<button class="submit-edit-PROJECT">ویرایش گروه</button>
+				</form>
+				<button class="md-close"><img src="/img/cross.png" /></button>
+			</div>
+		</div>
+
+		<!--<img class="logo" src="/img/logo.svg" />-->
+		<div class="container">
+			<div id="tabs" class="tabs">
+				<nav>
+					<ul>
+						<li><a href="#section-1" id="users-section" class="icon-user"><span>کاربران</span></a></li>
+						<li><a href="#section-2" id="apps-section" class="icon-phone"><span>اپلیکیشن ها</span></a></li>
+						<li><a href="#section-3" class="icon-settings"><span>کنترل</span></a></li>
+						<li><a href="#section-4" class="icon-cup"><span>ابزار های مکمل</span></a></li>
+						<li><a href="#section-5" class="icon-tag"><span>تیکت ها</span></a></li>
+						<li><a href="#section-6" class="icon-params"><span>گزارش</span></a></li>
+					</ul>
+				</nav>
+				<div class="content">
+					<section id="section-1">
+						<div class="toolbar">
+							<div class="search">
+								<button id="user_usr_srch"><span class="icon-search"></span></button>
+								<button class="md-trigger" data-modal="modal-firstEmail" id="firstEmail">ایمیل اول</button>
+								<button class="md-trigger" data-modal="modal-secondEmail" id="secondEmail">ایمیل دوم</button>
+								<button class="md-trigger" data-modal="modal-createGroup" id="createGroup">ایجاد گروه جدید</button>
+								<img src="/img/menu.png" id="tableView" />
+								<img src="/img/grid-alt.png" id="gridView" />
+								<input id="user_input_srch" type="text" name="search" placeholder="بین کاربران جستجو کنید ..." />
+							</div>
+							<div class="menu">
+								<a href="#" id="users-access" class="active-link">کاربران</a>
+								<a href="#" id="groups-access" class="border-none">گروه ها</a>
+							</div>
+						</div>
+
+						<table id="users-list">
+							<tbody>
+								<col width="25%">
+								<col width="35%">
+								<col width="15%">
+								<col width="25%">
+								<tr>
+									<td>نام کاربر</td>
+									<td>UDID</td>
+									<td>تعداد نصب</td>
+									<td>دستورات</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- Groups list -->
+						<div class="grid group-list grid-pad" id="groups-list">
+
+						</div>
+
+						<div class="load-more">
+							<button>بارگزاری نتایج بیشتر</button>
+						</div>
+
+						<!--<div class="pagination">
+						  <ul class="page-numbers">
+						    <li><a href="" class="prev">«</a></li>
+						    <li><a href="" class="current">1</a></li>
+						    <li><a href="" >2</a></li>
+						    <li><a href="">3</a></li>
+						    <li><a href="">4</a></li>
+						    <li><a href="">5</a></li>
+						    <li><a href="">6</a></li>
+						    <li><a href="">7</a></li>
+						    <li><a href="">8</a></li>
+						    <li><a href="">9</a></li>
+						    <li><a href="">10</a></li>
+						    <li><a href="">11</a></li>
+						    <li><a href="">12</a></li>
+						    <li><a href="">13</a></li>
+						    <li><a href="">14</a></li>
+
+						    <li><a href="" class="next">»</a></li>
+						  </ul>
+						</div>-->
+					</section>
+				</div><!-- /content -->
+				<div class="content">
+					<section id="section-2">
+						<div class="toolbar AppToolbar">
+							<div class="search">
+								<button id="user_srch_app"><span class="icon-search"></span></button>
+								<button class="md-trigger" data-modal="modal-appDownload" id="createApp">اضافه کردن اپلیکیشن</button>
+								<img src="/img/menu.png" id="appsTableView" />
+								<img src="/img/grid-alt.png" id="appsGridView" />
+								<input style="width:54%" type="text" id="user_input_srch_app" name="search" placeholder="نام اپلیکیشن یا توضیحات ..." />
+							</div>
+
+							<div class="menu">
+								<a href="#" id="active-access" class="active-link">فعال ها</a>
+								<a href="#" id="deactive-access" class="border-none">غیرفعال ها</a>
+							</div>
+						</div>
+						<table id="apps-table">
+							<tbody>
+								<col width="50%">
+								<col width="10%">
+								<col width="5%">
+								<col width="10%">
+								<col width="15%">
+								<col width="15%">
+								<tr>
+									<td>نام</td>
+									<td>نمایه</td>
+									<td>نسخه</td>
+									<td>حجم</td>
+									<td>وضعیت</td>
+									<td>دستورات</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="grid apps-list grid-pad" id="apps-list">
+
+						</div>
+						<div class="load-more">
+							<button>بارگزاری نتایج بیشتر</button>
+						</div>
+						<!--<div class="pagination">
+						  <ul class="page-numbers">
+						    <li><a href="" class="prev">«</a></li>
+						    <li><a href="">1</a></li>
+						    <li><a href="" class="current" >2</a></li>
+						    <li><a href="">3</a></li>
+						    <li><a href="">4</a></li>
+						    <li><a href="">5</a></li>
+						    <li><a href="">6</a></li>
+						    <li><a href="">7</a></li>
+						    <li><a href="">8</a></li>
+						    <li><a href="">9</a></li>
+						    <li><a href="">10</a></li>
+						    <li><a href="">11</a></li>
+						    <li><a href="">12</a></li>
+						    <li><a href="">13</a></li>
+						    <li><a href="">14</a></li>
+
+						    <li><a href="" class="next">»</a></li>
+						  </ul>
+						</div>-->
+					</section>
+				</div>
+				<div class="content">
+					<section id="section-3">
+						<div class="toolbar">
+							<div class="menu">
+								<a href="#" class="controll-tab active-link" data-viewid="#appview-editor">نمای اَپ</a>
+								<a href="#" class="controll-tab" data-viewid="#test-report">تست اَپ</a>
+								<a href="#" class="controll-tab border-none" data-viewid="#import-apps">افزودن دستی اپ</a>
+							</div> <!-- /menu -->
+						</div> <!-- /toolbar -->
+            <div id="import-apps" style="display: none;">
+                <form id="dirapp-form" action="#" method="post">
+                    <ul>
+                        <li>
+                            <label for="nam">نام:</label>
+                            <input type="text" name="nam" required>
+                        </li>
+                        <li>
+                            موضوع:<br>
+                            <select name="cat" required>
+                                <option value="Utilities">ابزارها</option>
+                                <option value="Productivity">بهره‌وری</option>
+                                <option value="Reference">مرجع</option>
+                                <option value="Social Networking">شبکه‌های اجتماعی</option>
+                                <option value="Music">موسیقی</option>
+                                <option value="Medical">پزشکی</option>
+                                <option value="Navigation">راهبری</option>
+                                <option value="Lifestyle">سبک زندگی</option>
+                                <option value="Business">کسب و کار</option>
+                                <option value="Finance">سرمایه‌گذاری</option>
+                                <option value="Weather">آب و هوا</option>
+                                <option value="Education">آموزش</option>
+                                <option value="Travel">سفر</option>
+                                <option value="Book">کتاب</option>
+                                <option value="Entertainment">سرگرمی</option>
+                                <option value="Sports">ورزش</option>
+                                <option value="Games">بازی</option>
+                                <option value="News">اخبار</option>
+                                <option value="Photo & Video">عکس و ویدئو</option>
+                                <option value="Health & Fitness">سلامتی و تندرستی</option>
+                                <option value="Food & Drink">غذا و نوشیدنی</option>
+                                <option value="Catalogs">کاتالوگ‌ها</option>
+                            </select> 
+                        </li>
+                        <li>
+                            <label for="ven">توزیع کننده</label>
+                            <input type="text" name="ven" required>
+                        </li>
+                        <li>
+                            دستگاه‌های مورد پشتیبانی:<br>
+                            <select style="direction: ltr" name="sdev" required>
+                                <option value='All'>All</option>
+                                <option value='iPad23G'>iPad23G</option>
+                                <option value='iPad2Wifi'>iPad2Wifi</option>
+                                <option value='iPadFourthGen'>iPadFourthGen</option>
+                                <option value='iPadFourthGen4G'>iPadFourthGen4G</option>
+                                <option value='iPadMini'>iPadMini</option>
+                                <option value='iPadMini4G'>iPadMini4G</option>
+                                <option value='iPadThirdGen'>iPadThirdGen</option>
+                                <option value='iPadThirdGen4G'>iPadThirdGen4G</option>
+                                <option value='iPhone-3GS'>iPhone-3GS</option>
+                                <option value='iPhone4'>iPhone4</option>
+                                <option value='iPhone4S'>iPhone4S</option>
+                                <option value='iPhone5'>iPhone5</option>
+                                <option value='iPhone5c'>iPhone5c</option>
+                                <option value='iPhone5s'>iPhone5s</option>
+                                <option value='iPodTouchFifthGen'>iPodTouchFifthGen</option>
+                                <option value='iPodTouchourthGen'>iPodTouchourthGen</option>
+                                <option value='iPad3G'>iPad3G</option>
+                                <option value='iPadWifi'>iPadWifi</option>
+                                <option value='iPodTouchThirdGen'>iPodTouchThirdGen</option>
+                                <option value='iPhone6'>iPhone6</option>
+                                <option value='iPhone6Plus'>iPhone6Plus</option>
+                                <option value='iPodTouchFourthGen'>iPodTouchFourthGen</option>
+                                <option value='iPodTouchSixthGen'>iPodTouchSixthGen</option>
+                                <option value='iPhone'>iPhone</option>
+                                <option value='iPhone-3G'>iPhone-3G</option>
+                                <option value='iPod-touch'>iPod-touch</option>
+                                <option value='iPod-touch-with-mic'>iPod-touch-with-mic</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label for="prc">قیمت:<span>(به دلار)</span></label>
+                            <input type="text" name="prc" required>
+                        </li>
+                        <li>
+                            توضیحات انگلیسی: <br>
+                            <textarea name="des" style="direction:rtl" rows="4" cols="50" required></textarea>
+                        </li>
+                        <li>
+                            توضیحات فارسی: <br>
+                            <textarea name="locdes" rows="4" required></textarea>
+                        </li>
+                        <li>
+                            توضیحات اضافه <span>(اختیاری)</span>: <br>
+                            <textarea name="note" rows="4"></textarea>
+                        </li>
+                        <li>
+                            <label for="ipa">فایل اصلی</label>
+                            <input accept=".ipa" type="file" name="ipa" required>
+                        </li>
+                        <li>
+                            <label for="artwork">تصویر نمایه</label>
+                            <input type="file"  accept="image/*" name="artwork" required>
+                        </li>
+                        <li>
+                            پیش‌نمایش اپ در آیفون
+                            <button style="float:left" class="addMoreInput">بیشتر</button><br>
+                            <div class="clonable">
+                                  <input accept="image/*" type="file" name="iphone">
+                            </div>
+                        </li><li>
+                            پیش‌نمایش اپ در آیپد<span>(اختیاری)</span>
+                            <button style="float:left" class="addMoreInput">بیشتر</button><br>
+                            <div class="clonable">
+                                  <input accept="image/*" type="file" name="ipad">
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="one-button-box">
+                        <button>ارسال</button>
+                        <input style="display: none" type="reset" value="پاک کردن فرم">
+                    </div>
+                </form>
+            </div>
+
+						<div id="test-report" style="display: none;">
+							<div class="tool-box half">
+								<p>با استفاده از فیلد زیر می‌توانید فایل‌های Excel گزارش تست خود را آپلود کنید. لطفا توجه داشته باشید که فایل‌ها مستقیما از سیستم دریافت شده باشد و تغییری در نحوه‌ی ورود داده‌ها اعمال نشود. </p>
+								<form id="test-upload" method='post' enctype='multipart/form-data'>
+									<label for="test-result">فایل اکسل تست را انتخاب کنید:</label>
+									<div class="fileinput">
+										<input onchange="setuploadbox(this)" id="test-result" type='file' name='xl-test' required/>
+										<div class="fakefile">
+											<span class="icon-data"></span>
+											<input id="fake-test-result" class="fakeinput" />
+										</div>
+									</div> <!-- /.fileinput -->
+									<div class="one-button-box">
+										<button>بارگزاری و اعمال نتایج</button>
+									</div> <!-- .one-button-box -->
+									<div class="clear"></div>
+								</form> <!-- /#banner -->
+							</div> <!-- /.tool-box -->
+							<div class="tool-box half">
+									<ul>
+										<li>
+											<label for="xl-select">پوشه مورد نظر برای تست را انتخاب کنید</label>
+											<select id="xl-select">
+											</select>
+										</li>
+									</ul>
+									<div class="one-button-box">
+										<button id="xl-download">دانلود</button>
+									</div> <!-- .one-button-box -->
+									<div class="clear"></div>
+							</div> <!-- /.tool-box -->
+							<div class="clear"></div>
+							<div id="failed-test-input" style="display: none">
+								<h4>آیدی‌های زیر به دلیل مشکل در ورودی ثبت نشدند</h4>
+								<ul></ul>
+							</div> <!-- /#failed-test-input -->
+							<div id="succeeded-test-input" style="display: none">
+								<h4>آیدی‌های زیر با موفقیت وارد شدند</h4>
+								<ul></ul>
+							</div> <!-- /#succeeded-test-input -->
+						</div><!--/ #test-report -->
+
+						<div id="appview-editor">
+							<div id="left-toolbox">
+								<h4>ایجاد بخش</h4>
+								<div id="section-generator" class="tool-box">
+									<ul class="tab-links">
+										<li class="active-tab"><a id="carousel-link" href="#banner-sectionform">لیست بنر</a></li>
+										<li><a href="#applist-sectionform">لیست اپ</a></li>
+									</ul>
+									<div class="tab-content">
+										<form id="banner-sectionform" class="tab active">
+											<div class="toolbox-box">
+												<label for="carousel-name">نوع بخش</label>
+												<input type="radio" id="banner-carousel" name="carousel-type" checked="checked">بنر
+												<input type="radio" id="bundle-carousel" name="carousel-type">باندل
+                      </div> <!-- /.toolbox-box -->
+											<div class="toolbox-box">
+												<label for="carousel-name">نام بخش</label>
+												<input type="text" id="carousel-name" required><br>
+                      </div> <!-- /.toolbox-box -->
+											<div class="sectionContainer">
+												<div class="section sortableBanners" data-sectionType="banner">
+												</div> <!-- .section -->
+											</div> <!-- /.sectionContainer -->
+											<div class="one-button-box">
+												<button>ذخیره بخش</button>
+											</div>
+											<div class="clear"></div>
+										</form> <!-- /#carousel-sectionform -->
+										<form id="applist-sectionform" class="tab">
+											<div class="toolbox-box">
+												<ul>
+
+													<li>
+                              <label for="section-name">نام بخش</label>
+                              <input type="text" id="applist-name" required>
+                          </li>
+												</ul>
+											</div> <!-- /.toolbox-box -->
+											<div class="sectionContainer">
+												<div data-sectionType="applist_horizontal" class="section sortableApps">
+												</div> <!-- .section -->
+											</div> <!-- /.sectionContainer -->
+											<div class="one-button-box">
+												<button>ذخیره لیست اپ</button>
+											</div>
+											<div class="clear"></div>
+										</form> <!-- /#applist-sectionform -->
+									</div> <!-- /.tab-content -->
+								</div> <!-- /section-generator -->
+								<div class="sub-box">
+									<div id="app-section" class="sub-tool-box">
+										<div class="toolbox-box">
+											<label for="search-box">جستجو</label>
+											<input type="text" id="search-box">
+											<button id="search-button"><span class="icon-search"></span></button>
+										</div>
+										<div id="appbox" class="sortableApps"></div>
+										<div class="clear"></div>
+									</div> <!-- /app-section -->
+									<div id="banner-box" class="sub-tool-box active">
+										<div class="toolbox-box">
+											<label for="search-box">جستجو</label>
+											<input type="text" id="banner-search-box">
+											<button id="banner-search-button"><span class="icon-search"></span></button>
+										</div>
+										<div class="one-button-box">
+											<button id="addBanner" class="md-trigger" data-modal="modal-bannerUploader">بارگزاری بنر جدید</button>
+											<button style="display:none" id="addBundle" class="md-trigger" data-modal="modal-bundleUploader">بارگزاری باندل جدید</button>
+										</div>
+										<div class="clear"></div>
+										<div class="sortableBanners"></div>
+										<div class="clear"></div>
+									</div>	<!-- /#banner-box -->
+
+								</div> <!-- /.sub-box -->
+							</div> <!-- /left-toolbox -->
+							<div id="right-toolbox">
+								<h4>کنترل نما</h4>
+								<div class="tool-box">
+									<div id="append-section">
+										<ul class="tab-links">
+											<li class="active-tab"><a href="#carousel-select">لیست بنر</a></li>
+											<li><a href="#applist-select">لیست اپ</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <form id="applist-select" class="toolbox-box tab">
+                            <div class="clear"></div>
+                            <label for="section-type">نام لیست اپ</label>
+                            <select>
+                            </select>
+                            <div class="one-button-box">
+                                <button>افزودن به نما</button>
+                            </div>
+                            <div class="clear"></div>
+                        </form> <!-- /.toolbox-box -->
+                        <div id="carousel-select" class="tab active">
+                            <form id="banner-select" class="toolbox-box">
+                                <label for="section-type">نام لیست بنر</label>
+                                <select>
+                                </select>
+                                <div class="one-button-box">
+                                    <button>افزودن به نما</button>
+                                </div>
+                                <div class="clear"></div>
+                            </form> <!-- /.toolbox-box -->
+                            <form id="bundle-select" class="toolbox-box tab active">
+                                <label for="section-type">نام لیست باندل</label>
+                                <select>
+                                </select>
+                                <div class="one-button-box">
+													          <button>افزودن به نما</button>
+												        </div>
+												        <div class="clear"></div>
+											      </form> <!-- /.toolbox-box -->
+                      </div>
+										</div> <!-- /.tab-content -->
+										<div class="one-button-box">
+											  <button onclick="update_screen()">مشاهده نمای حاضر</button>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div> <!-- /right-toolbox -->
+							<div id="device-view">
+								<div class="marvel-device iphone6 silver">
+									<div class="top-bar"></div>
+									<div class="sleep"></div>
+									<div class="volume"></div>
+									<div class="camera"></div>
+									<div class="sensor"></div>
+									<div class="speaker"></div>
+									<div class="screen sortableSections">
+										<!-- Content goes here -->
+									</div>
+									<div class="home"></div>
+									<div class="bottom-bar"></div>
+								</div>
+								<div class="two-button-box">
+									<button id="ipad-device"> iPad</button>
+									<button id="iphone-device" style="display: none;"> iPhone</button>
+									<button onclick="saveAppView()">ذخیره نما</button>
+								</div>
+							</div>
+						</div>
+				</div><!-- /content -->
+				<div class="content">
+					<section id="section-4">
+						<div class="tools-panel">
+							<div class="grid grid-pad">
+							    <div class="col-1-2">
+							       <div class="content2">
+										<a href="#"><img  src="/img/customerio.jpg" /></a>
+							       </div>
+							    </div>
+							    <div class="col-1-2">
+							       <div class="content2">
+										<a href="#"><img src="/img/appledeveloper.jpg" /></a>
+							       </div>
+							    </div>
+							</div>
+							<div class="grid grid-pad">
+							    <div class="col-1-1">
+							       <div class="content2">
+										<a href="#"><img  src="/img/livechat.jpg" /></a>
+							       </div>
+							    </div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<div class="content">
+					<section id="section-5">
+
+					</section>
+				</div>
+
+				<div class="content">
+					<section id="section-6">
+					  <div class="tool-box half">
+                <h4>آمار فعالیت اپل‌آیدی</h4>
+						<table id="idgen-statistics" style="margin: 0;">
+							<tr>
+								<td>عنوان</td>
+								<td>تعداد</td>
+							</tr>
+						</table>
+            </div>
+					  <div class="tool-box half" style="text-align: center;">
+                <h4>بررسی وضعیت کد تخفیف</h4>
+                <label for="promocode">کد تخفیف</label>
+                <input type="text" id="promocode">
+                <div class="one-button-box">
+                    <button id="check-promo">بررسی</button>
+                </div>
+            </div>
+					</section> <!-- #section-6 -->
+				</div> <!-- /.content -->
+
+			</div><!-- /tabs -->
+			<p class="info">سیستم مدیریت و پشتیبانی مشتریان <a href="http://PROJECT.ir">اپفورال</a> . نسخه ۰.۱.۰</p>
+		</div>
+		<div class="md-overlay"></div><!-- the overlay element -->
+
+		<!-- classie.js by @desandro: https://github.com/desandro/classie -->
+		<script src="/js/classie.js"></script>
+		<script src="/js/modalEffects.js"></script>
+
+		<!-- for the blur effect -->
+		<!-- by @derSchepp https://github.com/Schepp/CSS-Filters-Polyfill
+		<script>
+			// this is important for IEs
+			var polyfilter_scriptpath = '/js/';
+		</script> -->
+		<script src="/js/cssParser.js"></script>
+		<!--<script src="/js/css-filters-polyfill.js"></script>-->
+
+		<script src="/js/cbpFWTabs.js"></script>
+		<script src="/js/app.js"></script>
+		<script>
+			new CBPFWTabs( document.getElementById( 'tabs' ) );
+		</script>
+	</body>
+</html>
